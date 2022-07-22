@@ -1,5 +1,6 @@
 //selectiong UI elements
 let form = document.querySelector('#book_form');
+let bookList = document.querySelector('#book-list');
 
 //define a class for book list
 
@@ -40,11 +41,20 @@ class Ui {
       document.querySelector('.alert').remove();
     }, 3000)
   }
+  deleteFromBook(target) {
+    let ui = new Ui();
+    if(target.hasAttribute('href')){
+      if(confirm('Make sure you wanna Delete...')){
+        target.parentElement.parentElement.remove();
+        ui.showAlert("Book Deleted", "success")
+      }
+    }
+  }
 }
 
 //EventListener
 form.addEventListener('submit', newBook);
-
+bookList.addEventListener('click', deleteBook);
 //functions
 function newBook(e) {
   e.preventDefault();
@@ -59,5 +69,12 @@ function newBook(e) {
     
     ui.addBookList(book);
     ui.clearformField();
+    ui.showAlert("Book Added", "success");
   }
+}
+
+function deleteBook(e) {
+  e.preventDefault();
+  let ui = new Ui();
+  ui.deleteFromBook(e.target);
 }
